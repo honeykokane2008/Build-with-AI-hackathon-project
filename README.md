@@ -1,4 +1,4 @@
-# JanVaani — Citizen Demand Intelligence Platform
+# Citizen Demand Intelligence Platform
 
 A working prototype for the **"aggregate citizen feedback → align with national infrastructure
 priorities"** problem statement. Built as a Next.js app so the whole pipeline (ingestion →
@@ -102,3 +102,6 @@ keeps working unchanged.
 | Google Maps Platform | ⚠️ Leaflet/OpenStreetMap used for the prototype map; swapping the tile/marker layer for Google Maps Platform is a drop-in change in `components/ComplaintMap.jsx` |
 | Firebase (auth, realtime DB) | ⚠️ File-based JSON store used for the prototype; `lib/db.js` exposes 4 functions so swapping in Firestore is isolated to one file |
 | BigQuery | Not needed at hackathon scale (30 sample records); noted as the scale-up path for cross-border datasets |
+
+## Important note
+This project is fully codded by Gemini ai. I design this app and working of it.

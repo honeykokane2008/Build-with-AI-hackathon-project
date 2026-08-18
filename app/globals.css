@@ -1,0 +1,221 @@
+@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap");
+
+:root {
+  --ink: #12172b;
+  --paper: #f6f5f1;
+  --panel: #ffffff;
+  --indigo: #2c3467;
+  --indigo-deep: #171b38;
+  --signal: #e0622a;
+  --signal-soft: #f4d9c9;
+  --teal: #2a7f7a;
+  --line: #dedad0;
+  --muted: #6b6f80;
+
+  --font-display: "Space Grotesk", sans-serif;
+  --font-body: "Inter", sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body);
+}
+
+a {
+  color: inherit;
+}
+
+.container {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 0 28px;
+}
+
+.topbar {
+  border-bottom: 1px solid var(--line);
+  background: var(--paper);
+  position: sticky;
+  top: 0;
+  z-index: 20;
+}
+
+.topbar-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 0;
+}
+
+.brand {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 20px;
+  letter-spacing: -0.01em;
+  text-decoration: none;
+  color: var(--ink);
+}
+
+.brand-mark {
+  width: 10px;
+  height: 10px;
+  background: var(--signal);
+  border-radius: 2px;
+  display: inline-block;
+}
+
+.brand-tag {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--muted);
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+
+.nav {
+  display: flex;
+  gap: 6px;
+}
+
+.nav a {
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 14px;
+  text-decoration: none;
+  color: var(--muted);
+  padding: 8px 14px;
+  border-radius: 6px;
+  transition: all 0.15s ease;
+}
+
+.nav a:hover,
+.nav a.active {
+  color: var(--ink);
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.btn {
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 14px;
+  padding: 10px 18px;
+  border-radius: 7px;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.12s ease, opacity 0.12s ease;
+}
+
+.btn:active {
+  transform: scale(0.98);
+}
+
+.btn-primary {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+.btn-primary:hover {
+  opacity: 0.88;
+}
+
+.btn-signal {
+  background: var(--signal);
+  color: #fff;
+}
+
+.btn-signal:hover {
+  opacity: 0.9;
+}
+
+.card {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+}
+
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.stat-num {
+  font-family: var(--font-mono);
+  font-weight: 500;
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  padding: 3px 9px;
+  border-radius: 20px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+
+.pill-critical {
+  background: #fbe3dc;
+  color: #b8391a;
+}
+.pill-high {
+  background: #fdeee0;
+  color: #ad5f14;
+}
+.pill-medium {
+  background: #fdf3d4;
+  color: #8a6d0a;
+}
+.pill-low {
+  background: #e6efe9;
+  color: #2c6b4f;
+}
+
+.pill-water {
+  background: #dbe9f4;
+  color: #1c5a85;
+}
+.pill-roads {
+  background: #eae4f4;
+  color: #5b3b8c;
+}
+.pill-electricity {
+  background: #fdf3d4;
+  color: #8a6d0a;
+}
+.pill-healthcare {
+  background: #fbe0e0;
+  color: #a02c2c;
+}
+.pill-sanitation {
+  background: #ddefe9;
+  color: #226354;
+}
+.pill-other {
+  background: #ececec;
+  color: #555;
+}
+
+::selection {
+  background: var(--signal-soft);
+}
+
+.leaflet-container {
+  background: var(--paper) !important;
+  font-family: var(--font-body) !important;
+}

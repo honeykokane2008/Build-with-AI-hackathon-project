@@ -1,0 +1,146 @@
+[
+  {
+    "id": "amravati",
+    "name": "Amravati",
+    "adminRegion": "Maharashtra, India",
+    "lat": 20.9374,
+    "lng": 77.7796,
+    "population": 2887826,
+    "ruralPopulationPct": 61,
+    "medianIncomeIndex": 42,
+    "infraIndex": {
+      "water": 38,
+      "roads": 45,
+      "electricity": 61,
+      "healthcare": 33,
+      "sanitation": 40
+    },
+    "currentInvestmentINRLakh": {
+      "water": 120,
+      "roads": 340,
+      "electricity": 210,
+      "healthcare": 60,
+      "sanitation": 90
+    }
+  },
+  {
+    "id": "nagpur",
+    "name": "Nagpur",
+    "adminRegion": "Maharashtra, India",
+    "lat": 21.1458,
+    "lng": 79.0882,
+    "population": 4653570,
+    "ruralPopulationPct": 34,
+    "medianIncomeIndex": 58,
+    "infraIndex": {
+      "water": 62,
+      "roads": 70,
+      "electricity": 78,
+      "healthcare": 65,
+      "sanitation": 60
+    },
+    "currentInvestmentINRLakh": {
+      "water": 410,
+      "roads": 890,
+      "electricity": 520,
+      "healthcare": 300,
+      "sanitation": 240
+    }
+  },
+  {
+    "id": "yavatmal",
+    "name": "Yavatmal",
+    "adminRegion": "Maharashtra, India",
+    "lat": 20.3888,
+    "lng": 78.1204,
+    "population": 2775457,
+    "ruralPopulationPct": 74,
+    "medianIncomeIndex": 31,
+    "infraIndex": {
+      "water": 29,
+      "roads": 33,
+      "electricity": 48,
+      "healthcare": 24,
+      "sanitation": 27
+    },
+    "currentInvestmentINRLakh": {
+      "water": 40,
+      "roads": 95,
+      "electricity": 70,
+      "healthcare": 15,
+      "sanitation": 20
+    }
+  },
+  {
+    "id": "akola",
+    "name": "Akola",
+    "adminRegion": "Maharashtra, India",
+    "lat": 20.7002,
+    "lng": 77.0082,
+    "population": 1818617,
+    "ruralPopulationPct": 55,
+    "medianIncomeIndex": 44,
+    "infraIndex": {
+      "water": 41,
+      "roads": 50,
+      "electricity": 64,
+      "healthcare": 39,
+      "sanitation": 44
+    },
+    "currentInvestmentINRLakh": {
+      "water": 150,
+      "roads": 260,
+      "electricity": 180,
+      "healthcare": 70,
+      "sanitation": 80
+    }
+  },
+  {
+    "id": "wardha",
+    "name": "Wardha",
+    "adminRegion": "Maharashtra, India",
+    "lat": 20.7453,
+    "lng": 78.6022,
+    "population": 1300774,
+    "ruralPopulationPct": 68,
+    "medianIncomeIndex": 39,
+    "infraIndex": {
+      "water": 35,
+      "roads": 40,
+      "electricity": 55,
+      "healthcare": 30,
+      "sanitation": 33
+    },
+    "currentInvestmentINRLakh": {
+      "water": 60,
+      "roads": 110,
+      "electricity": 90,
+      "healthcare": 25,
+      "sanitation": 30
+    }
+  },
+  {
+    "id": "buldhana",
+    "name": "Buldhana",
+    "adminRegion": "Maharashtra, India",
+    "lat": 20.5293,
+    "lng": 76.1809,
+    "population": 2586258,
+    "ruralPopulationPct": 78,
+    "medianIncomeIndex": 28,
+    "infraIndex": {
+      "water": 22,
+      "roads": 31,
+      "electricity": 46,
+      "healthcare": 19,
+      "sanitation": 21
+    },
+    "currentInvestmentINRLakh": {
+      "water": 35,
+      "roads": 80,
+      "electricity": 65,
+      "healthcare": 10,
+      "sanitation": 15
+    }
+  }
+]

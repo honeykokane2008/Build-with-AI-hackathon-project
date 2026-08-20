@@ -142,5 +142,80 @@
       "healthcare": 10,
       "sanitation": 15
     }
+  },
+  {
+    "id": "coimbatore",
+    "name": "Coimbatore",
+    "adminRegion": "Tamil Nadu, India",
+    "primaryLanguage": "Tamil",
+    "lat": 11.0168,
+    "lng": 76.9558,
+    "population": 3458045,
+    "ruralPopulationPct": 40,
+    "medianIncomeIndex": 55,
+    "infraIndex": {
+      "water": 58,
+      "roads": 66,
+      "electricity": 74,
+      "healthcare": 57,
+      "sanitation": 54
+    },
+    "currentInvestmentINRLakh": {
+      "water": 300,
+      "roads": 610,
+      "electricity": 380,
+      "healthcare": 210,
+      "sanitation": 170
+    }
+  },
+  {
+    "id": "amritsar",
+    "name": "Amritsar",
+    "adminRegion": "Punjab, India",
+    "primaryLanguage": "Punjabi",
+    "lat": 31.6340,
+    "lng": 74.8723,
+    "population": 2490891,
+    "ruralPopulationPct": 46,
+    "medianIncomeIndex": 47,
+    "infraIndex": {
+      "water": 44,
+      "roads": 52,
+      "electricity": 68,
+      "healthcare": 41,
+      "sanitation": 39
+    },
+    "currentInvestmentINRLakh": {
+      "water": 160,
+      "roads": 290,
+      "electricity": 230,
+      "healthcare": 90,
+      "sanitation": 70
+    }
+  },
+  {
+    "id": "murshidabad",
+    "name": "Murshidabad",
+    "adminRegion": "West Bengal, India",
+    "primaryLanguage": "Bengali",
+    "lat": 24.1833,
+    "lng": 88.2667,
+    "population": 7103807,
+    "ruralPopulationPct": 80,
+    "medianIncomeIndex": 26,
+    "infraIndex": {
+      "water": 25,
+      "roads": 29,
+      "electricity": 43,
+      "healthcare": 21,
+      "sanitation": 19
+    },
+    "currentInvestmentINRLakh": {
+      "water": 45,
+      "roads": 90,
+      "electricity": 60,
+      "healthcare": 20,
+      "sanitation": 18
+    }
   }
 ]

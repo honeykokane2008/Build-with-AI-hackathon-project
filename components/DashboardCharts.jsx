@@ -1,6 +1,6 @@
 "use client";
 
-import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, CartesianGrid } from "recharts";
+import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, CartesianGrid, LineChart, Line } from "recharts";
 
 const CATEGORY_COLOR = {
   water: "#1c5a85",
@@ -32,6 +32,39 @@ export function CategoryBarChart({ data }) {
           ))}
         </Bar>
       </BarChart>
+    </ResponsiveContainer>
+  );
+}
+
+export function TrendLineChart({ data }) {
+  const categories = ["water", "roads", "electricity", "healthcare", "sanitation", "other"];
+  const CATEGORY_COLOR2 = {
+    water: "#1c5a85",
+    roads: "#5b3b8c",
+    electricity: "#8a6d0a",
+    healthcare: "#a02c2c",
+    sanitation: "#226354",
+    other: "#888",
+  };
+  return (
+    <ResponsiveContainer width="100%" height={260}>
+      <LineChart data={data} margin={{ left: 4, right: 20, top: 8, bottom: 8 }}>
+        <CartesianGrid strokeDasharray="3 3" stroke="#e5e2d8" />
+        <XAxis dataKey="week" tick={{ fontSize: 11, fill: "#6b6f80" }} />
+        <YAxis allowDecimals={false} tick={{ fontSize: 12, fill: "#6b6f80" }} />
+        <Tooltip contentStyle={{ fontFamily: "Inter, sans-serif", fontSize: 13, borderRadius: 8 }} />
+        {categories.map((cat) => (
+          <Line
+            key={cat}
+            type="monotone"
+            dataKey={cat}
+            stroke={CATEGORY_COLOR2[cat]}
+            strokeWidth={2}
+            dot={{ r: 2 }}
+            connectNulls
+          />
+        ))}
+      </LineChart>
     </ResponsiveContainer>
   );
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 
 const CHANNELS = [
   { id: "text", label: "Text" },
@@ -13,34 +13,77 @@ const SAMPLES = [
   "गावात गेल्या दोन आठवड्यांपासून पाणी पुरवठा बंद आहे, महिलांना लांबून पाणी आणावे लागते.",
   "The main road near the market has huge potholes and two accidents happened this month.",
   "प्राथमिक स्वास्थ्य केंद्र में डॉक्टर नहीं आ रहे, मरीजों को 40 किमी दूर जाना पड़ता है।",
+  "எங்கள் தெருவில் சாலை மிகவும் மோசமாக உள்ளது, குழிகள் நிறைந்துள்ளன.",
+  "ਸਾਡੇ ਇਲਾਕੇ ਵਿੱਚ ਇੱਕ ਹਫ਼ਤੇ ਤੋਂ ਬਿਜਲੀ ਨਹੀਂ ਹੈ।",
+  "আমাদের গ্রামে দুই সপ্তাহ ধরে পানীয় জলের সরবরাহ বন্ধ আছে।",
 ];
+
+function fileToBase64(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result.split(",")[1]);
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+}
 
 export default function SubmitPage() {
   const [text, setText] = useState("");
   const [channel, setChannel] = useState("text");
-  const [status, setStatus] = useState("idle"); // idle | loading | done | error
+  const [status, setStatus] = useState("idle"); // idle | loading | done | error | ratelimited
+  const [errorMsg, setErrorMsg] = useState("");
   const [result, setResult] = useState(null);
   const [listening, setListening] = useState(false);
+  const [photoFile, setPhotoFile] = useState(null);
+  const [photoPreview, setPhotoPreview] = useState(null);
+  const fileInputRef = useRef(null);
 
   async function handleSubmit(e) {
     e.preventDefault();
     if (!text.trim()) return;
     setStatus("loading");
     setResult(null);
+    setErrorMsg("");
     try {
+      let imageBase64 = null;
+      let imageMimeType = null;
+      if (photoFile) {
+        imageBase64 = await fileToBase64(photoFile);
+        imageMimeType = photoFile.type;
+      }
+
       const res = await fetch("/api/complaints", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ text, channel }),
+        body: JSON.stringify({ text, channel, imageBase64, imageMimeType }),
       });
+
+      if (res.status === 429) {
+        const data = await res.json();
+        setStatus("ratelimited");
+        setErrorMsg(data.error || "Too many submissions — please wait a minute.");
+        return;
+      }
       if (!res.ok) throw new Error("Request failed");
+
       const data = await res.json();
       setResult(data.complaint);
       setStatus("done");
       setText("");
+      setPhotoFile(null);
+      setPhotoPreview(null);
+      if (fileInputRef.current) fileInputRef.current.value = "";
     } catch (err) {
       setStatus("error");
+      setErrorMsg("Something went wrong — please try again.");
     }
+  }
+
+  function handlePhotoChange(e) {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setPhotoFile(file);
+    setPhotoPreview(URL.createObjectURL(file));
   }
 
   function startVoice() {
@@ -71,8 +114,8 @@ export default function SubmitPage() {
       </h1>
       <p style={{ color: "var(--muted)", marginBottom: 30, lineHeight: 1.6 }}>
         Write in Hindi, Marathi, English, or a mix — the system detects language and
-        classifies the issue automatically. Try one of the sample complaints below, or
-        use voice input.
+        classifies the issue automatically. Try one of the sample complaints below, add
+        a photo as evidence, or use voice input.
       </p>
 
       <div style={{ display: "flex", gap: 8, marginBottom: 18, flexWrap: "wrap" }}>
@@ -107,8 +150,30 @@ export default function SubmitPage() {
           }}
         />
 
+        <div style={{ marginBottom: 16 }}>
+          <label
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: 8,
+              fontSize: 13,
+              color: "var(--muted)",
+              cursor: "pointer",
+              border: "1px dashed var(--line)",
+              padding: "8px 14px",
+              borderRadius: 8,
+            }}
+          >
+            📷 {photoFile ? photoFile.name : "Attach photo evidence (optional)"}
+            <input ref={fileInputRef} type="file" accept="image/*" onChange={handlePhotoChange} style={{ display: "none" }} />
+          </label>
+          {photoPreview && (
+            <img src={photoPreview} alt="preview" style={{ display: "block", marginTop: 10, maxHeight: 140, borderRadius: 8, border: "1px solid var(--line)" }} />
+          )}
+        </div>
+
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 12 }}>
-          <div style={{ display: "flex", gap: 6 }}>
+          <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
             {CHANNELS.map((c) => (
               <button
                 type="button"
@@ -136,8 +201,8 @@ export default function SubmitPage() {
         </div>
       </form>
 
-      {status === "error" && (
-        <p style={{ color: "#b8391a", marginTop: 16, fontSize: 14 }}>Something went wrong — please try again.</p>
+      {(status === "error" || status === "ratelimited") && (
+        <p style={{ color: "#b8391a", marginTop: 16, fontSize: 14 }}>{errorMsg}</p>
       )}
 
       {result && (
@@ -148,6 +213,11 @@ export default function SubmitPage() {
             <span className={`pill pill-${result.urgency}`}>{result.urgency} urgency</span>
             <span className="pill" style={{ background: "#eee", color: "#555" }}>{result.language}</span>
             <span className="pill" style={{ background: "#eee", color: "#555" }}>{result.channel}</span>
+            {result.isDuplicate && (
+              <span className="pill" style={{ background: "#e6efe9", color: "#2c6b4f" }}>
+                merged with existing issue ({result.similarityToCluster}% similar)
+              </span>
+            )}
           </div>
           {result.regionId ? (
             <p style={{ fontSize: 14, color: "var(--muted)" }}>
@@ -160,6 +230,12 @@ export default function SubmitPage() {
             <p style={{ fontSize: 14, marginTop: 10 }}>
               <span style={{ color: "var(--muted)" }}>Translation: </span>
               {result.translatedText}
+            </p>
+          )}
+          {result.photoObservation && (
+            <p style={{ fontSize: 14, marginTop: 10 }}>
+              <span style={{ color: "var(--muted)" }}>Photo analysis: </span>
+              {result.photoObservation}
             </p>
           )}
           <p style={{ fontSize: 12, color: "var(--muted)", marginTop: 14, fontFamily: "var(--font-mono)" }}>

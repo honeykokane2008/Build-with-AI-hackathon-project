@@ -36,10 +36,17 @@ const SAMPLES = [
   ["nagpur", "water", "low", "en", "Water supply timing changed without notice, minor inconvenience."],
   ["nagpur", "sanitation", "medium", "mr", "काही भागात कचरा वेळेवर उचलला जात नाही."],
   ["nagpur", "healthcare", "low", "en", "Hospital appointment system could be improved, otherwise services are fine."],
+  ["coimbatore", "roads", "high", "ta", "எங்கள் தெருவில் சாலை மிகவும் மோசமாக உள்ளது, குழிகள் நிறைந்துள்ளன, விபத்துகள் நடக்கின்றன."],
+  ["coimbatore", "water", "medium", "en", "Water supply pressure is low in our apartment block during summer months."],
+  ["amritsar", "electricity", "critical", "pa", "ਸਾਡੇ ਇਲਾਕੇ ਵਿੱਚ ਇੱਕ ਹਫ਼ਤੇ ਤੋਂ ਬਿਜਲੀ ਨਹੀਂ ਹੈ, ਟ੍ਰਾਂਸਫਾਰਮਰ ਸੜ ਗਿਆ ਹੈ।"],
+  ["amritsar", "sanitation", "medium", "en", "Garbage collection is irregular in our sector, sometimes skipped for a week."],
+  ["murshidabad", "water", "critical", "bn", "আমাদের গ্রামে দুই সপ্তাহ ধরে পানীয় জলের সরবরাহ বন্ধ আছে, মহিলাদের অনেক দূর থেকে জল আনতে হচ্ছে।"],
+  ["murshidabad", "healthcare", "critical", "en", "No doctor at the health centre for a month, patients travel 30km for basic treatment."],
+  ["murshidabad", "roads", "high", "bn", "গ্রামের রাস্তা বর্ষায় সম্পূর্ণ ভেঙে যায়, স্কুলের বাচ্চারা যেতে পারে না।"],
 ];
 
 function makeComplaint([regionId, category, urgency, language, text], i) {
-  const daysAgo = Math.floor(Math.random() * 21);
+  const daysAgo = Math.floor(Math.random() * 70); // spread across ~10 weeks for a meaningful trend view
   const createdAt = new Date(Date.now() - daysAgo * 86400000).toISOString();
   return {
     id: crypto.randomUUID(),
@@ -48,14 +55,17 @@ function makeComplaint([regionId, category, urgency, language, text], i) {
     category,
     urgency,
     language,
-    translatedText: language === "en" ? text : "(auto-translation placeholder — connect ANTHROPIC_API_KEY for live translation)",
+    translatedText: language === "en" ? text : "(auto-translation placeholder — connect GEMINI_API_KEY for live translation)",
     confidence: "seed-data",
     regionId,
+    hasPhoto: false,
+    isDuplicate: false,
+    similarityToCluster: 0,
     createdAt,
   };
 }
 
-const complaints = SAMPLES.map(makeComplaint);
+const complaints = SAMPLES.map(makeComplaint).map((c) => ({ ...c, clusterId: c.id }));
 complaints.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 
 fs.writeFileSync(
